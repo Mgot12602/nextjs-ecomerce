@@ -9,6 +9,7 @@ import ChangePasswordForm from "../components/Account/ChangePasswordForm";
 import { Icon } from "semantic-ui-react";
 import BasicModal from "../components/Modal/BasicModal";
 import AddressForm from "../components/Account/AddressForm";
+import ListAddress from "../components/Account/ListAddress";
 
 export default function Account() {
   const router = useRouter();
@@ -65,11 +66,20 @@ function Addresses() {
   const [showModal, setShowModal] = useState(false);
   const [titleModal, setTitleModal] = useState("");
   const [formModal, setFormModal] = useState(null);
+  const [reloadAddresses, setReloadAddresses] = useState(false);
 
-  const openModal = (title) => {
+  const openModal = (title, address) => {
     setTitleModal(title);
     setShowModal(true);
-    setFormModal(<AddressForm setShowModal={setShowModal} />);
+    setFormModal(
+      <AddressForm
+        setShowModal={setShowModal}
+        setReloadAddresses={setReloadAddresses}
+        newAddress={address ? false : true}
+        address={address || null}
+      />
+    );
+    console.log("address", address);
   };
 
   return (
@@ -79,7 +89,11 @@ function Addresses() {
         <Icon name="plus" link onClick={() => openModal("Nueva dirección")} />
       </div>
       <div className="data">
-        <p>Lista de direcciones</p>
+        <ListAddress
+          reloadAddresses={reloadAddresses}
+          setReloadAddresses={setReloadAddresses}
+          openModal={openModal}
+        />
       </div>
       <BasicModal show={showModal} setShow={setShowModal} title={titleModal}>
         {formModal}

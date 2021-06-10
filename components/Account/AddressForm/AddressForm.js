@@ -3,17 +3,22 @@ import { Form, Button } from "semantic-ui-react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import useAuth from "../../../hooks/useAuth";
-import { createAddressApi } from "../../../api/address";
+import { createAddressApi, updateAddressApi } from "../../../api/address";
 
-export default function AddressForm({ setShowModal }) {
+export default function AddressForm({
+  setShowModal,
+  setReloadAddresses,
+  newAddress,
+  address,
+}) {
   const [loading, setLoading] = useState(false);
   const { auth, logout } = useAuth();
 
   const formik = useFormik({
-    initialValues: initialValues(),
+    initialValues: initialValues(address),
     validationSchema: Yup.object(validationSchema()),
     onSubmit: (formData) => {
-      createAddress(formData);
+      newAddress ? createAddress(formData) : updateAddress(formData);
     },
   });
 
@@ -30,6 +35,25 @@ export default function AddressForm({ setShowModal }) {
       setLoading(false);
     } else {
       formik.resetForm();
+      setLoading(false);
+      setReloadAddresses(true);
+      setShowModal(false);
+    }
+  };
+
+  const updateAddress = async (formData) => {
+    setLoading(true);
+    const formDataTemp = {
+      ...formData,
+      user: auth.idUser,
+    };
+    const response = updateAddressApi(address.id, formDataTemp, logout);
+    if (!response) {
+      toast.warning("Error al actualizar la dirección");
+      setLoading(false);
+    } else {
+      formik.resetForm();
+      setReloadAddresses(true);
       setLoading(false);
       setShowModal(false);
     }
@@ -108,22 +132,22 @@ export default function AddressForm({ setShowModal }) {
       </Form.Group>
       <div className="actions">
         <Button loading={loading} type="submit" className="submit">
-          Crear dirección
+          {newAddress ? "Crear dirección" : "Actualizar dirección"}
         </Button>
       </div>
     </Form>
   );
 }
 
-function initialValues() {
+function initialValues(address) {
   return {
-    title: "",
-    name: "",
-    address: "",
-    city: "",
-    state: "",
-    postalCode: "",
-    phone: "",
+    title: address?.title || "",
+    name: address?.name || "",
+    address: address?.address || "",
+    city: address?.city || "",
+    state: address?.state || "",
+    postalCode: address?.postalCode || "",
+    phone: address?.phone || "",
   };
 }
 function validationSchema() {
