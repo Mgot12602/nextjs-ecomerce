@@ -2,14 +2,39 @@ import React from "react";
 import { map } from "lodash";
 import { Grid, Image } from "semantic-ui-react";
 import Link from "next/link";
+import useWindowSize from "../../hooks/useWindowSize";
+import {
+  breakpointUpSm,
+  breakpointUpMd,
+  breakpointUpLg,
+} from "../../utils/breakpoint";
 
 export default function ListGames({ games }) {
+  const { width } = useWindowSize();
+  console.log("data", width);
+
+  const getColumnsRender = () => {
+    switch (true) {
+      case width > breakpointUpLg:
+        return 5;
+
+      case width > breakpointUpMd:
+        return 3;
+
+      case width > breakpointUpSm:
+        return 2;
+
+      default:
+        return 1;
+    }
+  };
+
   return (
     <div className="list-games">
       <Grid>
-        <Grid.Row columns={5}>
+        <Grid.Row columns={getColumnsRender()}>
           {map(games, (game) => (
-            <Game game={game} />
+            <Game game={game} key={game._id} />
           ))}
         </Grid.Row>
       </Grid>
@@ -19,18 +44,18 @@ export default function ListGames({ games }) {
 
 function Game({ game }) {
   return (
-    <Grid.Column className="list-game__game">
+    <Grid.Column className="list-games__game">
       <Link href={`/games/${game.url}`}>
         <a>
           <div className="list-games__game-poster">
             <Image src={game.poster.url} alt={game.title} />
             <div className="list-games__game-poster-info">
               {game.discount ? (
-                <span className="discount">-{game.discount}</span>
+                <span className="discount">-{game.discount}%</span>
               ) : (
                 <span />
               )}
-              <span className="price">{game.price}</span>
+              <span className="price">{game.price}€</span>
             </div>
           </div>
           <h2>{game.title}</h2>
