@@ -45,7 +45,7 @@ export default function ListGames({ games }) {
 function Game({ game }) {
   return (
     <Grid.Column className="list-games__game">
-      <Link href={`/games/${game.url}`}>
+      <Link href={`/${game.url}`}>
         <a>
           <div className="list-games__game-poster">
             <Image src={game.poster.url} alt={game.title} />
