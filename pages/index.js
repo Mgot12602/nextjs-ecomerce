@@ -4,6 +4,7 @@ import { getLastGamesApi } from "../api/game";
 import { size, map } from "lodash";
 import { Loader } from "semantic-ui-react";
 import ListGames from "../components/ListGames";
+import Seo from "../components/Seo";
 
 export default function Home() {
   const [games, setGames] = useState(null);
@@ -18,6 +19,7 @@ export default function Home() {
 
   return (
     <BasicLayout className="home">
+      <Seo />
       {!games && <Loader active>Cargando juegos</Loader>}
       {games && size(games) === 0 && (
         <div>

@@ -5,6 +5,7 @@ import { getGameByUrlApi } from "../api/game";
 import HeaderGame from "../components/Game/HeaderGame/HeaderGame";
 import { Loader } from "semantic-ui-react";
 import TabsGame from "../components/Game/TabsGame";
+import Seo from "../components/Seo";
 
 export default function Game() {
   const { query } = useRouter();
@@ -22,6 +23,7 @@ export default function Game() {
 
   return (
     <BasicLayout className="game">
+      <Seo title={game.title} />
       <HeaderGame game={game} />
       <TabsGame game={game} />
     </BasicLayout>
