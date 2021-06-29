@@ -13,12 +13,11 @@ export default function RegisterForm({ showLoginForm }) {
     onSubmit: async (formData) => {
       setLoading(true);
       const response = await registerApi(formData);
-      console.log("response", response);
+
       if (response?.jwt) {
         toast.success("Registro correcto");
         showLoginForm();
       } else {
-        console.log("Error al registrar el usuario, inténtelo más tarde");
         toast.error("Error al registrar el usuario, inténtelo más tarde");
       }
       setLoading(false);

@@ -11,7 +11,6 @@ import {
 
 export default function ListGames({ games }) {
   const { width } = useWindowSize();
-  console.log("data", width);
 
   const getColumnsRender = () => {
     switch (true) {

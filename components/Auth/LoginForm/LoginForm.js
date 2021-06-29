@@ -9,13 +9,11 @@ import useAuth from "../../../hooks/useAuth";
 export default function LoginForm({ showRegisterForm, onCloseModal }) {
   const [loading, setLoading] = useState(false);
   const { auth, login } = useAuth();
-  console.log("auth inside loginForm", auth);
 
   const formik = useFormik({
     initialValues: initialValues(),
     validationShchema: Yup.object(validationShchema()),
     onSubmit: async (formData) => {
-      console.log(formData);
       setLoading(true);
       const response = await loginApi(formData);
       if (response?.jwt) {
@@ -33,10 +31,8 @@ export default function LoginForm({ showRegisterForm, onCloseModal }) {
     formik.setErrors({});
 
     const validateEmail = Yup.string().email().required();
-    console.log(formik.values.identifier);
 
     if (!validateEmail.isValidSync(formik.values.identifier)) {
-      console.log("email incorrecto");
       formik.setErrors({ identifier: true });
     } else {
       resetPasswordApi(formik.values.identifier);

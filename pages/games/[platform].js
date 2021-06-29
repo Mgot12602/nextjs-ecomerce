@@ -28,7 +28,7 @@ export default function Platform() {
           limitPerPage,
           getStartItem()
         );
-        console.log(response);
+
         setGames(response);
       })();
     }

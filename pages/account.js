@@ -79,7 +79,6 @@ function Addresses() {
         address={address || null}
       />
     );
-    console.log("address", address);
   };
 
   return (

@@ -21,7 +21,6 @@ export default function CarouselScreenShots({ title, screenshots }) {
     setShowModal(true);
   };
 
-  console.log("screenshots", screenshots);
   return (
     <>
       <Slider {...settings}>

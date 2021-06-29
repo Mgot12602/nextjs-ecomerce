@@ -7,6 +7,7 @@ import useAuth from "../../../hooks/useAuth";
 import { getMeApi } from "../../../api/user";
 import { getPlatformApi } from "../../../api/platform";
 import { map } from "lodash";
+import useCart from "../../../hooks/useCart";
 
 export default function MenuWeb() {
   const [showModal, setShowModal] = useState(false);
@@ -18,7 +19,7 @@ export default function MenuWeb() {
   useEffect(() => {
     (async () => {
       const response = await getMeApi(logout);
-      console.log("response from Menujs", response);
+
       setUser(response);
     })();
   }, [auth]);
@@ -29,7 +30,7 @@ export default function MenuWeb() {
   useEffect(() => {
     (async () => {
       const response = await getPlatformApi();
-      console.log(response);
+
       setPlatforms(response || []);
     })();
   }, []);
@@ -66,7 +67,6 @@ export default function MenuWeb() {
 }
 
 function MenuPlatforms({ platforms }) {
-  console.log("platforms inside menu platforms", platforms);
   return (
     <Menu>
       {map(platforms, (platform) => (
@@ -79,6 +79,7 @@ function MenuPlatforms({ platforms }) {
 }
 
 function MenuOptions({ onShowModal, user, logout }) {
+  const { productsCart } = useCart();
   return (
     <Menu>
       {user ? (
@@ -89,7 +90,7 @@ function MenuOptions({ onShowModal, user, logout }) {
               Mis pedidos
             </Menu.Item>
           </Link>
-          <Link href="/whishlist">
+          <Link href="/wishlist">
             <Menu.Item as="a">
               <Icon name="heart outline" />
               Whishlist
@@ -104,7 +105,12 @@ function MenuOptions({ onShowModal, user, logout }) {
           <Link href="/cart">
             <Menu.Item as="a" className="m-0">
               <Icon name="cart" />
-              Mi carrito
+
+              {productsCart > 0 && (
+                <Label color="red" floating circular>
+                  {productsCart}
+                </Label>
+              )}
             </Menu.Item>
           </Link>
 

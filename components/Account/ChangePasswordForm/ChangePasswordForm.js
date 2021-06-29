@@ -21,7 +21,6 @@ export default function ChangePasswordForm({ user, logout }) {
       if (response.confirmed !== true) {
         toast.error("Error al actualizar el password");
       } else {
-        console.log("Password actualizado");
         logout();
         toast.success("Password actualizado");
       }

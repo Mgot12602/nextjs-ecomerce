@@ -30,7 +30,7 @@ export async function loginApi(formData) {
     };
     const response = await fetch(url, params);
     const result = await response.json();
-    console.log("result", result);
+
     return result;
   } catch (error) {
     console.log(error);
@@ -79,7 +79,7 @@ export async function updateNameApi(idUser, data, logout) {
       },
       body: JSON.stringify(data),
     };
-    console.log("got here");
+
     const result = await authFetch(url, params, logout);
     return result ? result : null;
   } catch (error) {
@@ -99,7 +99,7 @@ export async function updateEmailApi(idUser, email, logout) {
       body: JSON.stringify({ email }),
     };
     const result = await authFetch(url, params, logout);
-    console.log("result", result);
+
     return result ? result : null;
   } catch (error) {
     console.log(error);
@@ -116,7 +116,7 @@ export async function updatePasswordApi(idUser, password, logout) {
       body: JSON.stringify({ password }),
     };
     const result = await authFetch(url, params, logout);
-    console.log("result", result);
+
     return result ? result : null;
   } catch (error) {
     console.log(error);

@@ -12,15 +12,13 @@ export default function ChangeEmailForm({ user, logout, setReloadUser }) {
     initialValues: initialValues(),
     validationSchema: Yup.object(validationSchema()),
     onSubmit: async (formData) => {
-      console.log(formData);
       setLoading(true);
       //   Aqui substituimos updateNameApi por updateEmailApi
       const response = await updateEmailApi(user.id, formData.email, logout);
-      console.log("response", response);
+
       if (response.confirmed !== true) {
         toast.error("Error al actualizar el email");
       } else {
-        console.log("Email actualizado");
         setReloadUser(true);
         toast.success("Email actualizado");
       }

@@ -22,10 +22,9 @@ export async function createAddressApi(address, logout) {
 
 export async function getAddressesApi(idUser, logout) {
   try {
-    console.log("wer are in getAddressesApi");
     const url = `${BASE_PATH}/addresses?user=${idUser}`;
     const result = await authFetch(url, null, logout);
-    console.log("result", result);
+
     if (result.statusCode === 500) throw "Error del servidor";
     return result;
   } catch (error) {

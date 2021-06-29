@@ -5,7 +5,6 @@ import moment from "moment";
 import "moment/locale/es";
 
 export default function InfoGame({ game }) {
-  console.log("game", game);
   return (
     <div className="info-game">
       <ReactPlayer

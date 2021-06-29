@@ -14,11 +14,10 @@ export default function ChangeNameForm({ user, logout, setReloadUser }) {
     onSubmit: async (formData) => {
       setLoading(true);
       const response = await updateNameApi(user.id, formData, logout);
-      console.log(formData);
+
       if (!response) {
         toast.error("Error al actualizar el nombre y apellidos");
       } else {
-        console.log("Nombre actualizado");
         setReloadUser(true);
         toast.success("Nombre y apellidos actualizados");
       }

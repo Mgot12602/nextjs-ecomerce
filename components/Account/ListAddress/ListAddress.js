@@ -11,11 +11,11 @@ export default function ListAddress({
 }) {
   const [addresses, setAddresses] = useState(null);
   const { auth, logout } = useAuth();
-  console.log("We are in List Address");
+
   useEffect(() => {
     (async () => {
       const response = await getAddressesApi(auth.idUser, logout);
-      console.log("response", response);
+
       setAddresses(response || []);
       setReloadAddresses(false);
     })();
